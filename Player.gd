@@ -9,6 +9,8 @@ const GRAVITY = 10
 
 var motion = Vector2()
 var Wall = preload("res://WallNode.tscn")
+#var bg = load("res://World.tscn")
+#var bgNode = bg.get_node("ParallaxBackground/ParallaxLayer")
 var score = 0
 
 func _ready():
@@ -32,11 +34,15 @@ func _physics_process(delta):
 	get_parent().get_parent().get_node("CanvasLayer/Label").text = "Score : " + str(score)
 	
 	
+	
 
 func _on_Detect_area_entered(area):
 	if area.name == "PointArea":
 		score = score + 1
+		if score == 20:
+			get_tree().change_scene("res://Menu.tscn")
 
 func _on_Detect_body_entered(body):
 	if body.name == "Walls":
-		get_tree().reload_current_scene()
+		# get_tree().reload_current_scene()
+		get_tree().change_scene("res://GameOver.tscn")
